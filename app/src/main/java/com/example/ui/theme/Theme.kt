@@ -7,19 +7,20 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val StudioDarkColorScheme = darkColorScheme(
-    primary = EmeraldPrimary,
-    onPrimary = StudioObsidian,
-    primaryContainer = EmeraldDark,
-    onPrimaryContainer = EmeraldLight,
-    secondary = GoldAccent,
+    primary = PurplePrimary,
+    onPrimary = Color.White,
+    primaryContainer = PurpleLight,
+    onPrimaryContainer = PurpleDeep,
+    secondary = PurpleAccent,
     onSecondary = StudioObsidian,
     secondaryContainer = StudioCardElevated,
-    onSecondaryContainer = GoldGlow,
+    onSecondaryContainer = PurpleDeep,
     tertiary = CyanAccent,
     onTertiary = StudioObsidian,
     background = StudioObsidian,
@@ -31,15 +32,15 @@ private val StudioDarkColorScheme = darkColorScheme(
     outline = StudioBorder
 )
 
-private val StudioLightColorScheme = darkColorScheme( // We prefer a sleek studio dark theme throughout the production AI workspace
-    primary = EmeraldPrimary,
-    onPrimary = StudioObsidian,
-    primaryContainer = EmeraldDark,
-    onPrimaryContainer = EmeraldLight,
-    secondary = GoldAccent,
+private val StudioLightColorScheme = darkColorScheme(
+    primary = PurplePrimary,
+    onPrimary = Color.White,
+    primaryContainer = PurpleLight,
+    onPrimaryContainer = PurpleDeep,
+    secondary = PurpleAccent,
     onSecondary = StudioObsidian,
     secondaryContainer = StudioCardElevated,
-    onSecondaryContainer = GoldGlow,
+    onSecondaryContainer = PurpleDeep,
     tertiary = CyanAccent,
     onTertiary = StudioObsidian,
     background = StudioObsidian,

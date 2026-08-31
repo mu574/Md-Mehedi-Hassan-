@@ -24,13 +24,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -47,7 +43,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -60,14 +55,12 @@ import androidx.compose.ui.unit.sp
 import com.example.R
 import com.example.data.model.StudioProject
 import com.example.ui.StudioViewModel
-import com.example.ui.theme.CyanAccent
-import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldLight
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
+import com.example.ui.theme.PurpleAccent
+import com.example.ui.theme.PurpleDeep
+import com.example.ui.theme.PurpleLight
+import com.example.ui.theme.PurplePrimary
 import com.example.ui.theme.StudioBorder
 import com.example.ui.theme.StudioCardBg
-import com.example.ui.theme.StudioCardElevated
 import com.example.ui.theme.StudioDarkSurface
 import com.example.ui.theme.StudioObsidian
 import com.example.ui.theme.TextMuted
@@ -107,7 +100,7 @@ fun ProjectLibraryScreen(
     ) {
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Filter Chips Row
+        // Filter Chips Row (Clean Minimalism)
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
@@ -117,12 +110,14 @@ fun ProjectLibraryScreen(
                     selected = selectedFilter == filter,
                     onClick = { selectedFilter = filter },
                     label = { Text(filter, fontSize = 12.sp) },
+                    shape = RoundedCornerShape(18.dp),
                     colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = EmeraldPrimary,
-                        selectedLabelColor = StudioObsidian,
+                        selectedContainerColor = PurplePrimary,
+                        selectedLabelColor = Color.White,
                         containerColor = StudioCardBg,
                         labelColor = TextSecondary
-                    )
+                    ),
+                    border = BorderStroke(1.dp, if (selectedFilter == filter) PurplePrimary else StudioBorder)
                 )
             }
         }
@@ -193,8 +188,8 @@ fun ProjectCard(
             .fillMaxWidth()
             .clickable(onClick = onPlay)
             .testTag("project_item_${project.id}"),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = StudioDarkSurface),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = StudioCardBg),
         border = BorderStroke(1.dp, StudioBorder)
     ) {
         Row(
@@ -207,7 +202,7 @@ fun ProjectCard(
             Box(
                 modifier = Modifier
                     .size(72.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(12.dp))
             ) {
                 Image(
                     painter = painterResource(id = resId),
@@ -218,20 +213,20 @@ fun ProjectCard(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f)),
+                        .background(Color.Black.copy(alpha = 0.35f)),
                     contentAlignment = Alignment.Center
                 ) {
                     Box(
                         modifier = Modifier
                             .size(28.dp)
                             .clip(CircleShape)
-                            .background(EmeraldPrimary),
+                            .background(PurplePrimary),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.PlayArrow,
                             contentDescription = "Play",
-                            tint = StudioObsidian,
+                            tint = Color.White,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -258,24 +253,25 @@ fun ProjectCard(
 
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(GoldAccent.copy(alpha = 0.15f))
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(PurpleLight)
+                            .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
                             .padding(horizontal = 6.dp, vertical = 2.dp)
                     ) {
                         Text(
                             text = "${project.durationFormatted} min",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = GoldAccent
+                            color = PurpleDeep
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(3.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = project.stylePreset,
                     fontSize = 11.sp,
-                    color = EmeraldLight,
+                    color = PurpleDeep,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -318,3 +314,4 @@ fun ProjectCard(
         }
     }
 }
+

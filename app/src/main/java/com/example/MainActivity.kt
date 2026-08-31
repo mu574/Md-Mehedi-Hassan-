@@ -55,11 +55,10 @@ import com.example.ui.screens.ChatStudioScreen
 import com.example.ui.screens.FeatureWorkspaceScreen
 import com.example.ui.screens.MediaPlayerScreen
 import com.example.ui.screens.ProjectLibraryScreen
-import com.example.ui.theme.CyanAccent
-import com.example.ui.theme.EmeraldLight
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 import com.example.ui.theme.MyApplicationTheme
+import com.example.ui.theme.PurpleDeep
+import com.example.ui.theme.PurpleLight
+import com.example.ui.theme.PurplePrimary
 import com.example.ui.theme.StudioBorder
 import com.example.ui.theme.StudioDarkSurface
 import com.example.ui.theme.StudioObsidian
@@ -160,18 +159,18 @@ fun MainAppContent(viewModel: StudioViewModel = viewModel()) {
                                 Text(
                                     text = screenSubtitle,
                                     fontSize = 10.sp,
-                                    color = EmeraldLight
+                                    color = PurpleDeep
                                 )
                             }
                         }
                     },
                     actions = {
-                        // AI Status Badge
+                        // AI Status Badge (Clean Minimalism)
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(EmeraldPrimary.copy(alpha = 0.15f))
-                                .border(1.dp, EmeraldPrimary.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+                                .background(PurpleLight)
+                                .border(1.dp, StudioBorder, RoundedCornerShape(12.dp))
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -179,14 +178,14 @@ fun MainAppContent(viewModel: StudioViewModel = viewModel()) {
                                     modifier = Modifier
                                         .size(6.dp)
                                         .clip(RoundedCornerShape(3.dp))
-                                        .background(EmeraldLight)
+                                        .background(PurplePrimary)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text(
                                     text = "DSP Active",
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldLight
+                                    color = PurpleDeep
                                 )
                             }
                         }

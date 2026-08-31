@@ -25,14 +25,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -46,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -56,12 +53,10 @@ import androidx.compose.ui.unit.sp
 import com.example.data.model.StudioFeature
 import com.example.ui.ChatMessage
 import com.example.ui.StudioViewModel
-import com.example.ui.theme.CyanAccent
-import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldLight
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 import com.example.ui.theme.PurpleAccent
+import com.example.ui.theme.PurpleDeep
+import com.example.ui.theme.PurpleLight
+import com.example.ui.theme.PurplePrimary
 import com.example.ui.theme.StudioBorder
 import com.example.ui.theme.StudioCardBg
 import com.example.ui.theme.StudioCardElevated
@@ -103,7 +98,7 @@ fun ChatStudioScreen(
             .fillMaxSize()
             .background(StudioObsidian)
     ) {
-        // Quick Action Chips Row
+        // Quick Action Chips Row (Clean Minimalism)
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,7 +111,7 @@ fun ChatStudioScreen(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
-                        .background(StudioCardElevated)
+                        .background(StudioCardBg)
                         .border(1.dp, StudioBorder, RoundedCornerShape(20.dp))
                         .clickable {
                             viewModel.sendChatMessage(prompt)
@@ -126,7 +121,7 @@ fun ChatStudioScreen(
                     Text(
                         text = prompt,
                         fontSize = 12.sp,
-                        color = TextPrimary,
+                        color = TextSecondary,
                         fontWeight = FontWeight.Medium
                     )
                 }
@@ -169,25 +164,26 @@ fun ChatStudioScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
                             .background(StudioCardBg)
+                            .border(1.dp, StudioBorder, RoundedCornerShape(12.dp))
                             .padding(12.dp)
                     ) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(18.dp),
-                            color = EmeraldPrimary,
+                            color = PurplePrimary,
                             strokeWidth = 2.dp
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "AI Studio synthesizing response...",
                             fontSize = 12.sp,
-                            color = EmeraldLight
+                            color = PurpleDeep
                         )
                     }
                 }
             }
         }
 
-        // Input Area
+        // Input Area (Clean Minimalism)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -213,9 +209,9 @@ fun ChatStudioScreen(
                         .testTag("chat_input_field"),
                     shape = RoundedCornerShape(24.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = StudioCardBg,
-                        unfocusedContainerColor = StudioCardBg,
-                        focusedBorderColor = EmeraldPrimary,
+                        focusedContainerColor = StudioObsidian,
+                        unfocusedContainerColor = StudioObsidian,
+                        focusedBorderColor = PurplePrimary,
                         unfocusedBorderColor = StudioBorder,
                         focusedTextColor = TextPrimary,
                         unfocusedTextColor = TextPrimary
@@ -229,9 +225,8 @@ fun ChatStudioScreen(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(
-                            Brush.linearGradient(listOf(EmeraldPrimary, EmeraldDark))
-                        )
+                        .background(if (inputText.isNotBlank()) PurplePrimary else StudioCardBg)
+                        .border(1.dp, if (inputText.isNotBlank()) PurplePrimary else StudioBorder, CircleShape)
                         .clickable(enabled = inputText.isNotBlank()) {
                             val text = inputText
                             inputText = ""
@@ -243,7 +238,7 @@ fun ChatStudioScreen(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
                         contentDescription = "Send",
-                        tint = if (inputText.isNotBlank()) StudioObsidian else Color.White.copy(alpha = 0.4f),
+                        tint = if (inputText.isNotBlank()) Color.White else TextMuted,
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -274,16 +269,14 @@ fun ChatBubble(
                 Box(
                     modifier = Modifier
                         .size(32.dp)
-                        .clip(CircleShape)
-                        .background(
-                            Brush.linearGradient(listOf(EmeraldPrimary, GoldAccent))
-                        ),
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(PurplePrimary),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.AutoAwesome,
                         contentDescription = "AI",
-                        tint = StudioObsidian,
+                        tint = Color.White,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -300,10 +293,10 @@ fun ChatBubble(
                             bottomEnd = if (isUser) 4.dp else 16.dp
                         )
                     )
-                    .background(if (isUser) EmeraldDark.copy(alpha = 0.6f) else StudioCardBg)
+                    .background(if (isUser) PurpleLight else StudioCardBg)
                     .border(
                         1.dp,
-                        if (isUser) EmeraldPrimary.copy(alpha = 0.4f) else StudioBorder,
+                        if (isUser) StudioBorder else StudioBorder,
                         RoundedCornerShape(16.dp)
                     )
                     .padding(14.dp)
@@ -325,31 +318,32 @@ fun ChatBubble(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(StudioCardElevated)
-                            .border(1.dp, EmeraldPrimary.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+                            .clip(RoundedCornerShape(14.dp))
+                            .background(StudioDarkSurface)
+                            .border(1.dp, StudioBorder, RoundedCornerShape(14.dp))
                             .padding(12.dp)
                     ) {
                         Column {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Box(
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(4.dp))
-                                        .background(EmeraldPrimary.copy(alpha = 0.2f))
-                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(PurpleLight)
+                                        .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
+                                        .padding(horizontal = 8.dp, vertical = 3.dp)
                                 ) {
                                     Text(
                                         text = feature.shortName,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldLight
+                                        color = PurpleDeep
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = durationText,
                                     fontSize = 11.sp,
-                                    color = GoldAccent,
+                                    color = PurpleDeep,
                                     fontWeight = FontWeight.SemiBold
                                 )
                             }
@@ -361,7 +355,7 @@ fun ChatBubble(
                                 color = TextSecondary
                             )
 
-                            Spacer(modifier = Modifier.height(10.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -369,10 +363,10 @@ fun ChatBubble(
                                 Button(
                                     onClick = { onOpenStudio(feature, durationMin) },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = StudioDarkSurface,
+                                        containerColor = StudioCardBg,
                                         contentColor = TextPrimary
                                     ),
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = RoundedCornerShape(20.dp),
                                     modifier = Modifier.weight(1f)
                                 ) {
                                     Icon(
@@ -387,10 +381,10 @@ fun ChatBubble(
                                 Button(
                                     onClick = { onQuickGenerate(feature, durationMin) },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = EmeraldPrimary,
-                                        contentColor = StudioObsidian
+                                        containerColor = PurplePrimary,
+                                        contentColor = Color.White
                                     ),
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = RoundedCornerShape(20.dp),
                                     modifier = Modifier.weight(1f)
                                 ) {
                                     Icon(
@@ -409,3 +403,4 @@ fun ChatBubble(
         }
     }
 }
+

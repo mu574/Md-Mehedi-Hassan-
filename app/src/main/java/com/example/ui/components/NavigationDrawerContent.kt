@@ -40,7 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
@@ -51,10 +50,10 @@ import androidx.compose.ui.unit.sp
 import com.example.data.model.StudioFeature
 import com.example.ui.ScreenDestination
 import com.example.ui.StudioViewModel
-import com.example.ui.theme.CyanAccent
-import com.example.ui.theme.EmeraldLight
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
+import com.example.ui.theme.PurpleAccent
+import com.example.ui.theme.PurpleDeep
+import com.example.ui.theme.PurpleLight
+import com.example.ui.theme.PurplePrimary
 import com.example.ui.theme.StudioBorder
 import com.example.ui.theme.StudioCardBg
 import com.example.ui.theme.StudioCardElevated
@@ -82,7 +81,7 @@ fun StudioDrawerContent(
                 .fillMaxHeight()
                 .padding(vertical = 16.dp, horizontal = 12.dp)
         ) {
-            // App Branding Header
+            // App Branding Header (Clean Minimalism)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -93,17 +92,13 @@ fun StudioDrawerContent(
                     modifier = Modifier
                         .size(42.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(
-                            Brush.linearGradient(
-                                listOf(EmeraldPrimary, GoldAccent)
-                            )
-                        ),
+                        .background(PurplePrimary),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.AutoAwesome,
                         contentDescription = "App Logo",
-                        tint = StudioObsidian,
+                        tint = Color.White,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -118,7 +113,7 @@ fun StudioDrawerContent(
                     Text(
                         text = "Audio, Video & Recitation Suite",
                         fontSize = 11.sp,
-                        color = EmeraldLight
+                        color = PurpleDeep
                     )
                 }
             }
@@ -132,7 +127,7 @@ fun StudioDrawerContent(
                 icon = Icons.Default.Chat,
                 isSelected = currentScreen == ScreenDestination.CHAT_STUDIO,
                 badge = "AI",
-                badgeColor = CyanAccent,
+                badgeColor = PurplePrimary,
                 onClick = {
                     viewModel.navigateTo(ScreenDestination.CHAT_STUDIO)
                     onCloseDrawer()
@@ -145,7 +140,7 @@ fun StudioDrawerContent(
                 icon = Icons.Outlined.Folder,
                 isSelected = currentScreen == ScreenDestination.PROJECT_LIBRARY,
                 badge = null,
-                badgeColor = GoldAccent,
+                badgeColor = PurplePrimary,
                 onClick = {
                     viewModel.navigateTo(ScreenDestination.PROJECT_LIBRARY)
                     onCloseDrawer()
@@ -176,13 +171,17 @@ fun StudioDrawerContent(
                     val isSelected = currentScreen == ScreenDestination.FEATURE_WORKSPACE && selectedFeature == feature
                     val featureIcon = getFeatureIcon(feature)
                     val durationBadge = if (feature.isUnlimitedDuration) "Unlimited" else "30-50m"
-                    val badgeBg = if (feature.isUnlimitedDuration) CyanAccent else GoldAccent
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(if (isSelected) StudioCardElevated else Color.Transparent)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(if (isSelected) PurpleLight else Color.Transparent)
+                            .border(
+                                1.dp,
+                                if (isSelected) StudioBorder else Color.Transparent,
+                                RoundedCornerShape(12.dp)
+                            )
                             .clickable {
                                 viewModel.openFeatureStudio(feature)
                                 onCloseDrawer()
@@ -195,13 +194,13 @@ fun StudioDrawerContent(
                             modifier = Modifier
                                 .size(34.dp)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(if (isSelected) EmeraldPrimary.copy(alpha = 0.2f) else StudioCardBg),
+                                .background(if (isSelected) PurplePrimary else StudioCardBg),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = featureIcon,
                                 contentDescription = feature.title,
-                                tint = if (isSelected) EmeraldLight else TextSecondary,
+                                tint = if (isSelected) Color.White else TextSecondary,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -231,16 +230,16 @@ fun StudioDrawerContent(
                         // Duration Restriction Badge
                         Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(badgeBg.copy(alpha = 0.15f))
-                                .border(1.dp, badgeBg.copy(alpha = 0.3f), RoundedCornerShape(4.dp))
-                                .padding(horizontal = 5.dp, vertical = 2.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(StudioCardBg)
+                                .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
                             Text(
                                 text = durationBadge,
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = badgeBg
+                                color = PurpleDeep
                             )
                         }
                     }
@@ -255,15 +254,16 @@ fun StudioDrawerContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(10.dp))
                     .background(StudioCardBg)
-                    .padding(8.dp),
+                    .border(1.dp, StudioBorder, RoundedCornerShape(10.dp))
+                    .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Default.AutoAwesome,
                     contentDescription = null,
-                    tint = GoldAccent,
+                    tint = PurplePrimary,
                     modifier = Modifier.size(16.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -291,8 +291,13 @@ fun DrawerActionItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (isSelected) StudioCardElevated else Color.Transparent)
+            .clip(RoundedCornerShape(12.dp))
+            .background(if (isSelected) PurpleLight else Color.Transparent)
+            .border(
+                1.dp,
+                if (isSelected) StudioBorder else Color.Transparent,
+                RoundedCornerShape(12.dp)
+            )
             .clickable(onClick = onClick)
             .padding(horizontal = 10.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -301,13 +306,13 @@ fun DrawerActionItem(
             modifier = Modifier
                 .size(36.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(if (isSelected) EmeraldPrimary.copy(alpha = 0.2f) else StudioCardBg),
+                .background(if (isSelected) PurplePrimary else StudioCardBg),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = title,
-                tint = if (isSelected) EmeraldLight else TextSecondary,
+                tint = if (isSelected) Color.White else TextSecondary,
                 modifier = Modifier.size(20.dp)
             )
         }
@@ -331,15 +336,16 @@ fun DrawerActionItem(
         if (badge != null) {
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(badgeColor.copy(alpha = 0.15f))
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(PurpleLight)
+                    .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
                 Text(
                     text = badge,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
-                    color = badgeColor
+                    color = PurpleDeep
                 )
             }
         }
@@ -360,3 +366,4 @@ fun getFeatureIcon(feature: StudioFeature): ImageVector {
         StudioFeature.AUTO_EDITING_SUITE -> Icons.Default.AutoFixHigh
     }
 }
+

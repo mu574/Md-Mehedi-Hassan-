@@ -29,34 +29,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -73,14 +61,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
-import com.example.ui.ScreenDestination
 import com.example.ui.StudioViewModel
-import com.example.ui.theme.CyanAccent
-import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldLight
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldGlow
+import com.example.ui.theme.PurpleAccent
+import com.example.ui.theme.PurpleDeep
+import com.example.ui.theme.PurpleLight
+import com.example.ui.theme.PurplePrimary
 import com.example.ui.theme.StudioBorder
 import com.example.ui.theme.StudioCardBg
 import com.example.ui.theme.StudioCardElevated
@@ -90,7 +75,6 @@ import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextPrimary
 import com.example.ui.theme.TextSecondary
 import java.io.File
-import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
@@ -142,13 +126,13 @@ fun MediaPlayerScreen(
             else -> R.drawable.img_recitation_bg
         }
 
-        // Live Video Presentation Screen (60fps Canvas Player)
+        // Live Video Presentation Screen (Clean Minimalism 60fps Canvas Player)
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(260.dp),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = StudioDarkSurface),
+            colors = CardDefaults.cardColors(containerColor = StudioCardBg),
             border = BorderStroke(1.dp, StudioBorder)
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -160,22 +144,22 @@ fun MediaPlayerScreen(
                     contentScale = ContentScale.Crop
                 )
 
-                // Atmospheric gradient overlay
+                // Minimalist dark gradient overlay
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(
                             Brush.verticalGradient(
                                 listOf(
-                                    Color.Black.copy(alpha = 0.3f),
-                                    Color.Black.copy(alpha = 0.6f),
-                                    Color.Black.copy(alpha = 0.85f)
+                                    Color.Black.copy(alpha = 0.35f),
+                                    Color.Black.copy(alpha = 0.65f),
+                                    Color.Black.copy(alpha = 0.90f)
                                 )
                             )
                         )
                 )
 
-                // 60FPS Animated Dynamic Spectrogram & 3D Motion Particles Canvas
+                // 60FPS Animated Dynamic Spectrogram & Harmonic Rings (Purple Minimalist Canvas)
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val w = size.width
                     val h = size.height
@@ -187,7 +171,7 @@ fun MediaPlayerScreen(
                         for (r in 1..4) {
                             val radius = (40f * r) + (sin(Math.toRadians((phase + r * 30).toDouble())).toFloat() * 12f)
                             drawCircle(
-                                color = EmeraldLight.copy(alpha = 0.25f / r),
+                                color = PurplePrimary.copy(alpha = 0.25f / r),
                                 radius = radius,
                                 center = Offset(cx, cy - 20f),
                                 style = Stroke(width = 2.dp.toPx())
@@ -204,7 +188,7 @@ fun MediaPlayerScreen(
                         val barHeight = (h * 0.18f) * (0.3f + 0.7f * kotlin.math.abs(animOffset))
                         
                         drawRoundRect(
-                            color = if (i % 2 == 0) EmeraldPrimary else GoldAccent,
+                            color = if (i % 2 == 0) PurplePrimary else PurpleAccent,
                             topLeft = Offset(x, h - barHeight - 15f),
                             size = androidx.compose.ui.geometry.Size(barWidth, barHeight),
                             cornerRadius = androidx.compose.ui.geometry.CornerRadius(4f, 4f)
@@ -229,29 +213,30 @@ fun MediaPlayerScreen(
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(StudioObsidian.copy(alpha = 0.7f))
-                                .border(1.dp, EmeraldPrimary.copy(alpha = 0.5f), RoundedCornerShape(6.dp))
+                                .background(StudioObsidian.copy(alpha = 0.8f))
+                                .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Text(
                                 text = "4K 60FPS MASTER RENDER",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = EmeraldLight
+                                color = PurpleDeep
                             )
                         }
 
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(GoldAccent.copy(alpha = 0.2f))
+                                .background(PurpleLight)
+                                .border(1.dp, StudioBorder, RoundedCornerShape(6.dp))
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Text(
                                 text = "${project.durationFormatted} MIN",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = GoldAccent
+                                color = PurpleDeep
                             )
                         }
                     }
@@ -262,7 +247,7 @@ fun MediaPlayerScreen(
                             text = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = GoldAccent,
+                            color = TextPrimary,
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(4.dp))
@@ -270,7 +255,7 @@ fun MediaPlayerScreen(
                             text = project.title,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Medium,
-                            color = TextPrimary,
+                            color = PurpleDeep,
                             textAlign = TextAlign.Center
                         )
                     }
@@ -288,11 +273,11 @@ fun MediaPlayerScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Transport Playback Card
+        // Transport Playback Card (Clean Minimalism)
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = StudioDarkSurface),
+            colors = CardDefaults.cardColors(containerColor = StudioCardBg),
             border = BorderStroke(1.dp, StudioBorder)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -301,27 +286,28 @@ fun MediaPlayerScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column {
+                    Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = project.title,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = TextPrimary
                         )
+                        Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "Acoustic Echo: ${(project.echoLevel * 100).toInt()}% • Reverb: ${(project.reverbLevel * 100).toInt()}%",
-                            fontSize = 11.sp,
+                            text = "Echo: ${(project.echoLevel * 100).toInt()}% • Reverb: ${(project.reverbLevel * 100).toInt()}%",
+                            fontSize = 12.sp,
                             color = TextSecondary
                         )
                     }
+
+                    Spacer(modifier = Modifier.width(12.dp))
 
                     Box(
                         modifier = Modifier
                             .size(52.dp)
                             .clip(CircleShape)
-                            .background(
-                                Brush.linearGradient(listOf(EmeraldPrimary, EmeraldDark))
-                            )
+                            .background(PurplePrimary)
                             .clickable { viewModel.playbackController.togglePlayPause() }
                             .testTag("play_pause_button"),
                         contentAlignment = Alignment.Center
@@ -329,7 +315,7 @@ fun MediaPlayerScreen(
                         Icon(
                             imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                             contentDescription = if (isPlaying) "Pause" else "Play",
-                            tint = StudioObsidian,
+                            tint = Color.White,
                             modifier = Modifier.size(28.dp)
                         )
                     }
@@ -343,8 +329,8 @@ fun MediaPlayerScreen(
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     colors = SliderDefaults.colors(
-                        thumbColor = EmeraldPrimary,
-                        activeTrackColor = EmeraldPrimary,
+                        thumbColor = PurplePrimary,
+                        activeTrackColor = PurplePrimary,
                         inactiveTrackColor = StudioCardElevated
                     )
                 )
@@ -356,12 +342,12 @@ fun MediaPlayerScreen(
                     Text(
                         text = if (isPlaying) "Playing Master Audio" else "00:00",
                         fontSize = 11.sp,
-                        color = EmeraldLight
+                        color = PurpleDeep
                     )
                     Text(
-                        text = project.durationFormatted,
+                        text = "${project.durationFormatted} min",
                         fontSize = 11.sp,
-                        color = GoldAccent,
+                        color = PurpleDeep,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -374,7 +360,7 @@ fun MediaPlayerScreen(
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = StudioDarkSurface),
+            colors = CardDefaults.cardColors(containerColor = StudioCardBg),
             border = BorderStroke(1.dp, StudioBorder)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -382,7 +368,7 @@ fun MediaPlayerScreen(
                     text = "DOWNLOAD & EXTERNAL SHARING",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                    color = EmeraldLight,
+                    color = PurpleDeep,
                     letterSpacing = 0.8.sp
                 )
 
@@ -405,7 +391,7 @@ fun MediaPlayerScreen(
                         modifier = Modifier
                             .weight(1f)
                             .testTag("download_audio_button"),
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = StudioCardElevated,
                             contentColor = TextPrimary
@@ -419,12 +405,12 @@ fun MediaPlayerScreen(
                     // Download Video MP4
                     Button(
                         onClick = {
-                            Toast.makeText(context, "Video Project Exported: ${project.title}.mp4 (${project.durationFormatted})", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Video Project Exported: ${project.title}.mp4 (${project.durationFormatted}m)", Toast.LENGTH_LONG).show()
                         },
                         modifier = Modifier
                             .weight(1f)
                             .testTag("download_video_button"),
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = StudioCardElevated,
                             contentColor = TextPrimary
@@ -448,10 +434,10 @@ fun MediaPlayerScreen(
                         modifier = Modifier
                             .weight(1f)
                             .testTag("share_audio_button"),
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = EmeraldPrimary,
-                            contentColor = StudioObsidian
+                            containerColor = PurplePrimary,
+                            contentColor = Color.White
                         )
                     ) {
                         Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -464,11 +450,12 @@ fun MediaPlayerScreen(
                         modifier = Modifier
                             .weight(1f)
                             .testTag("share_video_button"),
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = GoldAccent,
-                            contentColor = StudioObsidian
-                        )
+                            containerColor = StudioCardElevated,
+                            contentColor = PurpleDeep
+                        ),
+                        border = BorderStroke(1.dp, StudioBorder)
                     ) {
                         Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(6.dp))
@@ -479,3 +466,4 @@ fun MediaPlayerScreen(
         }
     }
 }
+
