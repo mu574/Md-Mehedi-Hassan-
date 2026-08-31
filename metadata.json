@@ -1,0 +1,6 @@
+{
+  "name": "MediaStudio AI",
+  "description": "AI-powered Audio Processing, Quran Recitation, Ghojol, Song Synthesizer & Video Editing Suite",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
